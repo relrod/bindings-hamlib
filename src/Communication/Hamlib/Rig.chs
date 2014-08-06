@@ -1,5 +1,11 @@
+{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+
 module Communication.Hamlib.Rig where
 
+import Control.Lens hiding (Setting)
 import Foreign.Ptr
 import Foreign.C.Types
 
@@ -91,44 +97,52 @@ data Channel =
 --------------------------------------------------------------------------------
 
 data FreqRangeList =
-  FreqRange {
-      start          :: Freq
-    , end            :: Freq
-    , freqRangemodes :: Rmode
-    , lowPower       :: Int
-    , highPower      :: Int
-    , freqRangeVfo   :: Vfo
-    , freqRangeAnt   :: Ant
+  FreqRangeList {
+      _freqrangeStart          :: Freq
+    , _freqrangeEnd            :: Freq
+    , _freqrangeFreqRangemodes :: Rmode
+    , _freqrangeLowPower       :: Int
+    , _freqrangeHighPower      :: Int
+    , _freqrangeVfo            :: Vfo
+    , _freqrangeAnt            :: Ant
     }
 
 {#pointer *freq_range_list as FreqRangeListPtr -> FreqRangeList #}
+
+makeFields ''FreqRangeList
 
 --------------------------------------------------------------------------------
 
 data TuningStepList =
   TuningStepList {
-      tuningStepModes :: Rmode
-    , ts              :: ShortFreq
+      _tuningstepModes :: Rmode
+    , _tuningstepTs    :: ShortFreq
     }
 
 {#pointer *tuning_step_list as TuningStepListPtr -> TuningStepList #}
+
+makeFields ''TuningStepList
 
 --------------------------------------------------------------------------------
 
 data FilterList =
   FilterList {
-      filterModes :: Rmode
-    , filterWidth :: Pbwidth
+      _filterModes :: Rmode
+    , _filterWidth :: Pbwidth
     }
 
 {#pointer *filter_list as FilterListPtr -> FilterList #}
+
+makeFields ''FilterList
 
 --------------------------------------------------------------------------------
 
 data ExtList =
   ExtList {
-      extToken :: Token
-    , extVal   :: Value
+      _extToken :: Token
+    , _extVal   :: Value
     }
 
 {#pointer *ext_list as ExtListPtr -> ExtList #}
+
+makeFields ''ExtList

@@ -10,16 +10,17 @@ maintainer:          ricky@elrod.me
 copyright:           (c) 2014 Ricky Elrod
 category:            Communication
 build-type:          Simple
--- extra-source-files:  
+-- extra-source-files:
 cabal-version:       >=1.10
 
 library
   exposed-modules:     Communication.Hamlib.Rig
                      , Communication.Hamlib.RigList
-  -- other-modules:       
-  -- other-extensions:    
+  -- other-modules:
+  -- other-extensions:
   build-depends:       base >= 4 && < 5
-                     , c2hs
+--                     , c2hs
+                     , lens >= 4 && < 5
   build-tools:         c2hs
   Extra-libraries:     hamlib
   hs-source-dirs:      src
