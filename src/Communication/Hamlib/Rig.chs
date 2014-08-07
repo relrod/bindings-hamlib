@@ -3,6 +3,17 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeSynonymInstances #-}
 
+--------------------------------------------------------------------------------
+-- |
+-- Copyright : (c) 2014 Ricky Elrod
+-- License : BSD2
+--
+-- Maintainer : Ricky Elrod <ricky@elrod.me>
+-- Stability : experimental
+--
+-- Provides a Haskell interface to hamlib's @rig.h@.
+--------------------------------------------------------------------------------
+
 module Communication.Hamlib.Rig where
 
 import Control.Lens hiding (Setting)
