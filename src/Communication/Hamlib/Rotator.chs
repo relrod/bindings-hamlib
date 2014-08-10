@@ -1,1 +1,0 @@
-#include <hamlib/rotator.h>
