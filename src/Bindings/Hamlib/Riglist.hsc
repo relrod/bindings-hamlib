@@ -10,5 +10,5 @@ import Foreign.Ptr
 {- typedef int rig_model_t; -}
 #synonym_t rig_model_t , CInt
 
-#cinline RIG_MAKE_MODEL , CInt -> CInt -> IO CInt
-#cinline RIG_BACKEND_NUM , CInt -> IO CInt
+#cinline RIG_MAKE_MODEL , CInt -> CInt -> CInt
+#cinline RIG_BACKEND_NUM , CInt -> CInt
