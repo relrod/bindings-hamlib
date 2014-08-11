@@ -6,8 +6,7 @@ cabal haddock
 f=`mktemp -d`
 git clone git@github.com:CodeBlock/hamlib-haskell.git "$f/hamlib-haskell.git"
 pushd "$f/hamlib-haskell.git"
-  git checkout gh-pages
-  git rm -rf docs
+  git checkout gh-pages && git rm -rf *
 popd
 mv dist/doc/html/hamlib/* "$f/hamlib-haskell.git/"
 pushd "$f/hamlib-haskell.git"
@@ -18,7 +17,7 @@ popd
 rm -rf "$f"
 
 if [ $? == 0 ]; then
-  echo "*** Done: http://CodeBlock.github.io/hamlib-haskell/docs/"
+  echo "*** Done: http://CodeBlock.github.io/hamlib-haskell/"
   exit 0
 else
   echo "*** ERROR!!! Fix the above and try again."
