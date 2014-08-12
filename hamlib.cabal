@@ -15,8 +15,8 @@ cabal-version:       >=1.10
 
 library
   exposed-modules:     
-                     --  Binidngs.Hamlib.Rig
-                       Bindings.Hamlib.Riglist
+                       Bindings.Hamlib.Rig
+                     , Bindings.Hamlib.Riglist
                      --, Bindings.Hamlib.Rotator
                      --, Bindings.Hamlib.Rotlist
   -- other-modules:
