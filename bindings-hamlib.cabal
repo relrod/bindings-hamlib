@@ -1,4 +1,4 @@
-name:                hamlib
+name:                bindings-hamlib
 version:             0.1.0.0
 synopsis:            Hamlib bindings for Haskell
 description:         Haskell FFI bindings for hamlib
@@ -40,10 +40,10 @@ executable hamlib-hs-demo
   main-is:             Demo.hs
   hs-source-dirs:      src
   build-depends:       base >= 4 && < 5
-                     , hamlib
+                     , bindings-hamlib
   ghc-options:         -Wall -O2
 
 source-repository head
   type: git
-  location: git://github.com/CodeBlock/hamlib-haskell
+  location: git://github.com/CodeBlock/bindings-hamlib
   branch: master
