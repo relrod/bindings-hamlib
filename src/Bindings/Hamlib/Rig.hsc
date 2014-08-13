@@ -2,6 +2,11 @@
 #include <bindings.dsl.h>
 #include <hamlib/rig.h>
 
+{- This HAS to be exactly as it is, otherwise, one of the following happens:
+   - The file isn't found. (Yes, even if the relative path is the same.)
+   - The file is found, but not sourced. (Yeah, I don't know either.) -}
+#include "Rig.h"
+
 module Bindings.Hamlib.Rig where
 import Foreign.Ptr
 #strict_import
@@ -62,12 +67,6 @@ import Foreign.Ptr
 #num RIG_DEBUG_WARN
 #num RIG_DEBUG_VERBOSE
 #num RIG_DEBUG_TRACE
-{- struct rig; -}
-#opaque_t struct rig
-{- struct rig_state; -}
-#opaque_t struct rig_state
-{- typedef struct rig RIG; -}
-#opaque_t struct rig
 #synonym_t RIG , <struct rig>
 {- typedef unsigned int tone_t; -}
 #synonym_t tone_t , CUInt
@@ -332,11 +331,11 @@ import Foreign.Ptr
     const char * tooltip;
     const char * dflt;
     enum rig_conf_e type;
-    union {
-        struct {
+    union u {
+        struct n {
             float min; float max; float step;
         } n;
-        struct {
+        struct c {
             const char * combostr[8];
         } c;
     } u;
@@ -727,11 +726,10 @@ import Foreign.Ptr
 #field dcs_sql , CUInt
 #field scan_group , CInt
 #field flags , CInt
-#array_field channel_desc , CChar
+#field channel_desc , CString
 #field ext_levels , Ptr <struct ext_list>
 #stoptype
 {- typedef struct channel channel_t; -}
-#opaque_t struct channel
 #synonym_t channel_t , <struct channel>
 {- struct channel_cap {
     unsigned bank_num : 1;
@@ -762,35 +760,9 @@ import Foreign.Ptr
     unsigned ext_levels : 1;
 }; -}
 #starttype struct channel_cap
-#field bank_num , CUInt
-#field vfo , CUInt
-#field ant , CUInt
-#field freq , CUInt
-#field mode , CUInt
-#field width , CUInt
-#field tx_freq , CUInt
-#field tx_mode , CUInt
-#field tx_width , CUInt
-#field split , CUInt
-#field tx_vfo , CUInt
-#field rptr_shift , CUInt
-#field rptr_offs , CUInt
-#field tuning_step , CUInt
-#field rit , CUInt
-#field xit , CUInt
-#field funcs , CULong
-#field levels , CULong
-#field ctcss_tone , CUInt
-#field ctcss_sql , CUInt
-#field dcs_code , CUInt
-#field dcs_sql , CUInt
-#field scan_group , CUInt
-#field flags , CUInt
-#field channel_desc , CUInt
-#field ext_levels , CUInt
+
 #stoptype
 {- typedef struct channel_cap channel_cap_t; -}
-#opaque_t struct channel_cap
 #synonym_t channel_cap_t , <struct channel_cap>
 {- typedef enum {
             RIG_MTYPE_NONE = 0,
@@ -821,7 +793,6 @@ import Foreign.Ptr
 #field mem_caps , <struct channel_cap>
 #stoptype
 {- typedef struct chan_list chan_t; -}
-#opaque_t struct chan_list
 #synonym_t chan_t , <struct chan_list>
 {- struct gran {
     value_t min; value_t max; value_t step;
@@ -832,20 +803,23 @@ import Foreign.Ptr
 #field step , <value_t>
 #stoptype
 {- typedef struct gran gran_t; -}
-#opaque_t struct gran
 #synonym_t gran_t , <struct gran>
 {- struct cal_table {
     int size;
-    struct {
+    struct table {
         int raw; int val;
     } table[32];
 }; -}
+#starttype struct table
+#field raw , CInt
+#field val , CInt
+#stoptype
+
 #starttype struct cal_table
 #field size , CInt
-#array_field table , 
+#array_field table , <struct table>
 #stoptype
 {- typedef struct cal_table cal_table_t; -}
-#opaque_t struct cal_table
 #synonym_t cal_table_t , <struct cal_table>
 #callback chan_cb_t , Ptr <struct rig> -> Ptr (Ptr <struct channel>) -> CInt -> Ptr <struct chan_list> -> Ptr () -> IO CInt
 #callback confval_cb_t , Ptr <struct rig> -> Ptr <struct confparams> -> Ptr <value_t> -> Ptr () -> IO CInt
@@ -1175,22 +1149,22 @@ import Foreign.Ptr
 #field clone_combo_set , CString
 #field clone_combo_get , CString
 #stoptype
-{- typedef struct {
-            union {
+{- typedef struct hamlib_port_t {
+            union type {
                 rig_port_t rig; ptt_type_t ptt; dcd_type_t dcd;
             } type;
             int fd;
             void * handle;
             int write_delay;
             int post_write_delay;
-            struct {
+            struct post_write_date {
                 int tv_sec, tv_usec;
             } post_write_date;
             int timeout;
             int retry;
             char pathname[100];
-            union {
-                struct {
+            union parm {
+                struct serial {
                     int rate;
                     int data_bits;
                     int stop_bits;
@@ -1199,13 +1173,13 @@ import Foreign.Ptr
                     enum serial_control_state_e rts_state;
                     enum serial_control_state_e dtr_state;
                 } serial;
-                struct {
+                struct parallel {
                     int pin;
                 } parallel;
-                struct {
+                struct cm108 {
                     int ptt_bitnum;
                 } cm108;
-                struct {
+                struct usb {
                     int vid;
                     int pid;
                     int conf;
@@ -1216,20 +1190,66 @@ import Foreign.Ptr
                 } usb;
             } parm;
         } hamlib_port_t; -}
-#starttype hamlib_port_t
-#field type , 
+#starttype union type
+#field rig , <struct rig_port_t>
+#field ptt , <struct ptt_type_t>
+#field dcd , <struct dcd_type_t>
+#stoptype
+
+#starttype struct post_write_date
+#field tv_sec , CInt
+#field tv_usec , CInt
+#stoptype
+
+#starttype struct serial
+#field rate , CInt
+#field data_bits , CInt
+#field stop_bits , CInt
+#field parity , <enum serial_parity_e>
+#field handshake , <enum serial_handshake_e>
+#field rts_state , <enum serial_control_state_e>
+#field dtr_state , <enum serial_control_state_e>
+#stoptype
+
+#starttype struct parallel
+#field pin , CInt
+#stoptype
+
+#starttype struct cm108
+#field ptt_bitnum , CInt
+#stoptype
+
+#starttype struct usb
+#field vid , CInt
+#field pid , CInt
+#field conf , CInt
+#field iface , CInt
+#field alt , CInt
+#field vendor_name , CString
+#field product , CString
+#stoptype
+
+#starttype union parm
+#field serial , <struct serial>
+#field parallel , <struct parallel>
+#field cm108 , <struct cm108>
+#field usb , <struct usb>
+#stoptype
+
+#starttype struct hamlib_port_t
+#field type , <union type>
 #field fd , CInt
 #field handle , Ptr ()
 #field write_delay , CInt
 #field post_write_delay , CInt
-#field post_write_date , 
+#field post_write_date , <struct post_write_date>
 #field timeout , CInt
 #field retry , CInt
 #array_field pathname , CChar
-#field parm , 
+#field parm , <union parm>
 #stoptype
 {- typedef hamlib_port_t port_t; -}
-#synonym_t port_t , <hamlib_port_t>
+#synonym_t port_t , <struct hamlib_port_t>
 {- struct rig_state {
     hamlib_port_t rigport;
     hamlib_port_t pttport;
@@ -1271,9 +1291,9 @@ import Foreign.Ptr
     int mode_list;
 }; -}
 #starttype struct rig_state
-#field rigport , <hamlib_port_t>
-#field pttport , <hamlib_port_t>
-#field dcdport , <hamlib_port_t>
+#field rigport , <struct hamlib_port_t>
+#field pttport , <struct hamlib_port_t>
+#field dcdport , <struct hamlib_port_t>
 #field vfo_comp , CDouble
 #field itu_region , CInt
 #array_field rx_range_list , <struct freq_range_list>
@@ -1310,7 +1330,7 @@ import Foreign.Ptr
 #field tx_vfo , CInt
 #field mode_list , CInt
 #stoptype
-#callback vprintf_cb_t , <enum rig_debug_level_e> -> Ptr () -> CString -> <__builtin_va_list> -> IO CInt
+
 #callback freq_cb_t , Ptr <struct rig> -> CInt -> CDouble -> Ptr () -> IO CInt
 #callback mode_cb_t , Ptr <struct rig> -> CInt -> <rmode_t> -> CLong -> Ptr () -> IO CInt
 #callback vfo_cb_t , Ptr <struct rig> -> CInt -> Ptr () -> IO CInt
@@ -1393,18 +1413,14 @@ import Foreign.Ptr
 #ccall rig_power2mW , Ptr <struct rig> -> Ptr CUInt -> CFloat -> CDouble -> <rmode_t> -> IO CInt
 #ccall rig_mW2power , Ptr <struct rig> -> Ptr CFloat -> CUInt -> CDouble -> <rmode_t> -> IO CInt
 #ccall rig_get_resolution , Ptr <struct rig> -> <rmode_t> -> IO CLong
-#ccall rig_set_level , Ptr <struct rig> -> CInt -> CULong -> <value_t> -> IO CInt
 #ccall rig_get_level , Ptr <struct rig> -> CInt -> CULong -> Ptr <value_t> -> IO CInt
-#ccall rig_set_parm , Ptr <struct rig> -> CULong -> <value_t> -> IO CInt
 #ccall rig_get_parm , Ptr <struct rig> -> CULong -> Ptr <value_t> -> IO CInt
 #ccall rig_set_conf , Ptr <struct rig> -> CLong -> CString -> IO CInt
 #ccall rig_get_conf , Ptr <struct rig> -> CLong -> CString -> IO CInt
 #ccall rig_set_powerstat , Ptr <struct rig> -> <powerstat_t> -> IO CInt
 #ccall rig_get_powerstat , Ptr <struct rig> -> Ptr <powerstat_t> -> IO CInt
 #ccall rig_reset , Ptr <struct rig> -> <reset_t> -> IO CInt
-#ccall rig_set_ext_level , Ptr <struct rig> -> CInt -> CLong -> <value_t> -> IO CInt
 #ccall rig_get_ext_level , Ptr <struct rig> -> CInt -> CLong -> Ptr <value_t> -> IO CInt
-#ccall rig_set_ext_parm , Ptr <struct rig> -> CLong -> <value_t> -> IO CInt
 #ccall rig_get_ext_parm , Ptr <struct rig> -> CLong -> Ptr <value_t> -> IO CInt
 #ccall rig_ext_level_foreach , Ptr <struct rig> -> FunPtr (Ptr <struct rig> -> Ptr <struct confparams> -> Ptr () -> CInt) -> Ptr () -> IO CInt
 #ccall rig_ext_parm_foreach , Ptr <struct rig> -> FunPtr (Ptr <struct rig> -> Ptr <struct confparams> -> Ptr () -> CInt) -> Ptr () -> IO CInt
@@ -1467,17 +1483,15 @@ import Foreign.Ptr
 #ccall rig_set_debug , <enum rig_debug_level_e> -> IO ()
 #ccall rig_need_debug , <enum rig_debug_level_e> -> IO CInt
 #ccall rig_debug , <enum rig_debug_level_e> -> CString -> IO ()
-#ccall rig_set_debug_callback , <vprintf_cb_t> -> Ptr () -> IO <vprintf_cb_t>
-#ccall rig_set_debug_file , Ptr <struct _IO_FILE> -> IO (Ptr <struct _IO_FILE>)
 #ccall rig_register , Ptr <struct rig_caps> -> IO CInt
 #ccall rig_unregister , CInt -> IO CInt
 #ccall rig_list_foreach , FunPtr (Ptr <struct rig_caps> -> Ptr () -> CInt) -> Ptr () -> IO CInt
 #ccall rig_load_backend , CString -> IO CInt
 #ccall rig_check_backend , CInt -> IO CInt
 #ccall rig_load_all_backends , IO CInt
-#callback rig_probe_func_t , Ptr <hamlib_port_t> -> CInt -> Ptr () -> IO CInt
-#ccall rig_probe_all , Ptr <hamlib_port_t> -> <rig_probe_func_t> -> Ptr () -> IO CInt
-#ccall rig_probe , Ptr <hamlib_port_t> -> IO CInt
+#callback rig_probe_func_t , Ptr <struct hamlib_port_t> -> CInt -> Ptr () -> IO CInt
+#ccall rig_probe_all , Ptr <struct hamlib_port_t> -> <rig_probe_func_t> -> Ptr () -> IO CInt
+#ccall rig_probe , Ptr <struct hamlib_port_t> -> IO CInt
 #ccall rig_strrmode , <rmode_t> -> IO CString
 #ccall rig_strvfo , CInt -> IO CString
 #ccall rig_strfunc , CULong -> IO CString
