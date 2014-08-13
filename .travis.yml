@@ -8,7 +8,6 @@ matrix:
 allow_failures:
 - env: GHCVER=head
 before_install:
-- sudo apt-get install libhamlib-dev
 # If $GHCVER is the one travis has, don't bother reinstalling it.
 # We can also have faster builds by installing some libraries with
 # `apt`. If it isn't, install the GHC we want from hvr's PPA along
@@ -35,6 +34,7 @@ if [ $GHCVER = "head" ] || [ $GHCVER = "7.8.2" ]; then
 $CABAL install happy alex
 export PATH=$HOME/.cabal/bin:$PATH
 fi
+- sudo apt-get install libhamlib-dev
 install:
 - $CABAL install --dependencies-only --enable-tests
 - $CABAL configure -flib-Werror --enable-tests $MODE
