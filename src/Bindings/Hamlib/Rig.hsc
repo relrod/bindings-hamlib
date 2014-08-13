@@ -1,10 +1,6 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
 #include <bindings.dsl.h>
-#include <hamlib/rig.h>
-
-{- This HAS to be exactly as it is, otherwise, one of the following happens:
-   - The file isn't found. (Yes, even if the relative path is the same.)
-   - The file is found, but not sourced. (Yeah, I don't know either.) -}
+#include "rig.h"
 #include "Rig.h"
 
 module Bindings.Hamlib.Rig where
