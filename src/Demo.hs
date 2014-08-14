@@ -11,7 +11,7 @@ import Bindings.Hamlib.Rig
 main :: IO ()
 main = do
   rig <- c'rig_init 204
-  pokeArray (p'hamlib_port_t'pathname $ p'rig_state'rigport $ p'rig'state rig) (map castCharToCChar "/dev/ttyUSB0")
+  pokeArray (p'hamlib_port'pathname $ p'rig_state'rigport $ p'rig'state rig) (map castCharToCChar "/dev/ttyUSB0")
   res <- c'rig_open rig
   print res
   dptr <- malloc :: IO (Ptr CDouble)

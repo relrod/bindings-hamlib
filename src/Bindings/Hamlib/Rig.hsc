@@ -1145,7 +1145,7 @@ import Foreign.Ptr
 #field clone_combo_set , CString
 #field clone_combo_get , CString
 #stoptype
-{- typedef struct hamlib_port_t {
+{- typedef struct hamlib_port {
             union type {
                 rig_port_t rig; ptt_type_t ptt; dcd_type_t dcd;
             } type;
@@ -1232,7 +1232,7 @@ import Foreign.Ptr
 #field usb , <struct usb>
 #stoptype
 
-#starttype struct hamlib_port_t
+#starttype struct hamlib_port
 #field type , <union type>
 #field fd , CInt
 #field handle , Ptr ()
@@ -1245,7 +1245,7 @@ import Foreign.Ptr
 #field parm , <union parm>
 #stoptype
 {- typedef hamlib_port_t port_t; -}
-#synonym_t port_t , <struct hamlib_port_t>
+#synonym_t port_t , <struct hamlib_port>
 {- struct rig_state {
     hamlib_port_t rigport;
     hamlib_port_t pttport;
@@ -1287,9 +1287,9 @@ import Foreign.Ptr
     int mode_list;
 }; -}
 #starttype struct rig_state
-#field rigport , <struct hamlib_port_t>
-#field pttport , <struct hamlib_port_t>
-#field dcdport , <struct hamlib_port_t>
+#field rigport , <struct hamlib_port>
+#field pttport , <struct hamlib_port>
+#field dcdport , <struct hamlib_port>
 #field vfo_comp , CDouble
 #field itu_region , CInt
 #array_field rx_range_list , <struct freq_range_list>
@@ -1485,9 +1485,9 @@ import Foreign.Ptr
 #ccall rig_load_backend , CString -> IO CInt
 #ccall rig_check_backend , CInt -> IO CInt
 #ccall rig_load_all_backends , IO CInt
-#callback rig_probe_func_t , Ptr <struct hamlib_port_t> -> CInt -> Ptr () -> IO CInt
-#ccall rig_probe_all , Ptr <struct hamlib_port_t> -> <rig_probe_func_t> -> Ptr () -> IO CInt
-#ccall rig_probe , Ptr <struct hamlib_port_t> -> IO CInt
+#callback rig_probe_func_t , Ptr <struct hamlib_port> -> CInt -> Ptr () -> IO CInt
+#ccall rig_probe_all , Ptr <struct hamlib_port> -> <rig_probe_func_t> -> Ptr () -> IO CInt
+#ccall rig_probe , Ptr <struct hamlib_port> -> IO CInt
 #ccall rig_strrmode , <rmode_t> -> IO CString
 #ccall rig_strvfo , CInt -> IO CString
 #ccall rig_strfunc , CULong -> IO CString
