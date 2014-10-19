@@ -2,7 +2,7 @@ name:                bindings-hamlib
 version:             0.1.0.0
 synopsis:            Hamlib bindings for Haskell
 description:         Haskell FFI bindings for hamlib
-homepage:            https://github.com/CodeBlock/hamlib-haskell
+homepage:            https://github.com/relrod/hamlib-haskell
 license:             LGPL-2.1
 license-file:        LICENSE
 author:              Ricky Elrod
@@ -46,5 +46,5 @@ executable hamlib-hs-demo
 
 source-repository head
   type: git
-  location: git://github.com/CodeBlock/bindings-hamlib
+  location: git://github.com/relrod/bindings-hamlib
   branch: master
