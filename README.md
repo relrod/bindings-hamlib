@@ -1,6 +1,6 @@
 # bindings-hamlib
 
-[![Build Status](https://travis-ci.org/CodeBlock/bindings-hamlib.svg?branch=master)](https://travis-ci.org/CodeBlock/bindings-hamlib)
+[![Build Status](https://travis-ci.org/relrod/bindings-hamlib.svg?branch=master)](https://travis-ci.org/relrod/bindings-hamlib)
 
 Haskell FFI bindings to hamlib.
 
