@@ -1,4 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-unused-imports #-}
+
+-- WARNING!!! This file is auto-generated. Generate it using:
+-- scripts/generate-Riglist.sh
+
 #include <bindings.dsl.h>
 #include <bindings.cmacros.h>
 #include <hamlib/riglist.h>
@@ -13,7 +17,6 @@ import Foreign.Ptr
 #cinline RIG_MAKE_MODEL , CInt -> CInt -> CInt
 #cinline RIG_BACKEND_NUM , CInt -> CInt
 
--- grep define /usr/include/hamlib/riglist.h | sed 's/\/\*.*//g' | grep -v '"' | awk '{print $2}' | sed 's/^/#num /' | tail -n+5 | head -n-1
 #num RIG_MODEL_NONE
 #num RIG_DUMMY
 #num RIG_MODEL_DUMMY
@@ -317,7 +320,6 @@ import Foreign.Ptr
 #num RIG_ADAT
 #num RIG_MODEL_ADT_200A
 
--- grep define /usr/include/hamlib/riglist.h | sed 's/\/\*.*//g' | grep '"' | awk '{print $2}' | sed 's/^/#globalarray /' | sed 's/$/ , CString/'
 #globalarray RIG_BACKEND_DUMMY , CChar
 #globalarray RIG_BACKEND_YAESU , CChar
 #globalarray RIG_BACKEND_KENWOOD , CChar

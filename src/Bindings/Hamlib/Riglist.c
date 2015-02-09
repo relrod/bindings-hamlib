@@ -1,10 +1,11 @@
+// WARNING!!! This file is auto-generated. Generate it using:
+// scripts/generate-Riglist.sh
+
 #include <hamlib/riglist.h>
 #include <bindings.cmacros.h>
 
 BC_INLINE2(RIG_MAKE_MODEL, int, int, int)
 BC_INLINE1(RIG_BACKEND_NUM, int, int)
-
-// grep define /usr/include/hamlib/riglist.h | sed 's/\/\*.*//g' | grep '"' | awk '{print $2}' | sed 's/^/BC_GLOBALARRAY(/' | sed 's/$/, char)/'
 BC_GLOBALARRAY(RIG_BACKEND_DUMMY, char)
 BC_GLOBALARRAY(RIG_BACKEND_YAESU, char)
 BC_GLOBALARRAY(RIG_BACKEND_KENWOOD, char)
