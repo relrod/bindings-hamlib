@@ -92,6 +92,9 @@ import Foreign.Ptr
 #num RIG_MODEL_THD72A
 #num RIG_MODEL_TMD710
 #num RIG_MODEL_TMV71
+#num RIG_MODEL_F6K
+#num RIG_MODEL_TS590SG
+#num RIG_MODEL_XG3
 #num RIG_ICOM
 #num RIG_MODEL_IC1271
 #num RIG_MODEL_IC1275
@@ -154,6 +157,8 @@ import Foreign.Ptr
 #num RIG_MODEL_IC7410
 #num RIG_MODEL_IC9100
 #num RIG_MODEL_ICRX7
+#num RIG_MODEL_IC7100
+#num RIG_MODEL_ID5100
 #num RIG_MODEL_MINISCOUT
 #num RIG_MODEL_XPLORER
 #num RIG_MODEL_OS535
@@ -272,8 +277,6 @@ import Foreign.Ptr
 #num RIG_MODEL_DX77
 #num RIG_KACHINA
 #num RIG_MODEL_505DSP
-#num RIG_RPC
-#num RIG_MODEL_RPC
 #num RIG_GNURADIO
 #num RIG_MODEL_GNURADIO
 #num RIG_MODEL_MC4020
@@ -308,6 +311,10 @@ import Foreign.Ptr
 #num RIG_MODEL_FIFISDR
 #num RIG_MODEL_FUNCUBEDONGLE
 #num RIG_MODEL_HIQSDR
+#num RIG_MODEL_FASDR
+#num RIG_MODEL_SI570PEABERRY1
+#num RIG_MODEL_SI570PEABERRY2
+#num RIG_MODEL_FUNCUBEDONGLEPLUS
 #num RIG_TUNER
 #num RIG_MODEL_V4L
 #num RIG_MODEL_V4L2
@@ -319,6 +326,9 @@ import Foreign.Ptr
 #num RIG_MODEL_PRM8070
 #num RIG_ADAT
 #num RIG_MODEL_ADT_200A
+#num RIG_ICMARINE
+#num RIG_MODEL_IC_M700PRO
+#num RIG_MODEL_IC_M802
 
 #globalarray RIG_BACKEND_DUMMY , CChar
 #globalarray RIG_BACKEND_YAESU , CChar
@@ -339,7 +349,6 @@ import Foreign.Ptr
 #globalarray RIG_BACKEND_TENTEC , CChar
 #globalarray RIG_BACKEND_ALINCO , CChar
 #globalarray RIG_BACKEND_KACHINA , CChar
-#globalarray RIG_BACKEND_RPC , CChar
 #globalarray RIG_BACKEND_GNURADIO , CChar
 #globalarray RIG_BACKEND_MICROTUNE , CChar
 #globalarray RIG_BACKEND_TAPR , CChar
@@ -350,3 +359,4 @@ import Foreign.Ptr
 #globalarray RIG_BACKEND_RS , CChar
 #globalarray RIG_BACKEND_PRM80 , CChar
 #globalarray RIG_BACKEND_ADAT , CChar
+#globalarray RIG_BACKEND_ICMARINE , CChar
