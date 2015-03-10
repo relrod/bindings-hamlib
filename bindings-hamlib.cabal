@@ -2,7 +2,7 @@ name:                bindings-hamlib
 version:             0.1.0.0
 synopsis:            Hamlib bindings for Haskell
 description:         Haskell FFI bindings for hamlib
-homepage:            https://github.com/relrod/hamlib-haskell
+homepage:            https://github.com/relrod/bindings-hamlib
 license:             LGPL-2.1
 license-file:        LICENSE
 author:              Ricky Elrod
@@ -14,7 +14,7 @@ extra-source-files:  changelog.md
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     
+  exposed-modules:
                        Bindings.Hamlib.Rig
                      , Bindings.Hamlib.Riglist
                      --, Bindings.Hamlib.Rotator
