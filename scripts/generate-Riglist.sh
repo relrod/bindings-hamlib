@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
 this_script_dir="$( cd "${BASH_SOURCE[0]%/*}" && pwd )"
+hamlib="$1/include/hamlib"
+
+if [ ! -d "$hamlib" ]; then
+    echo "ERROR: First argument must be the path to a hamlib source tree!"
+    exit 1
+fi
 
 # HSC File
 
@@ -25,7 +31,7 @@ import Foreign.Ptr
 #cinline RIG_BACKEND_NUM , CInt -> CInt
 EOF
 echo >> "$this_script_dir/../src/Bindings/Hamlib/Riglist.hsc"
-grep -a define /usr/include/hamlib/riglist.h \
+grep -a define "$hamlib/riglist.h" \
   | sed 's/\/\*.*//g'                        \
   | grep -v '"'                              \
   | awk '{print $2}'                         \
@@ -36,7 +42,7 @@ grep -a define /usr/include/hamlib/riglist.h \
 
 echo >> "$this_script_dir/../src/Bindings/Hamlib/Riglist.hsc"
 
-grep -a define /usr/include/hamlib/riglist.h \
+grep -a define "$hamlib/riglist.h" \
   | sed 's/\/\*.*//g'                        \
   | grep '"'                                 \
   | awk '{print $2}'                         \
@@ -57,7 +63,7 @@ BC_INLINE2(RIG_MAKE_MODEL, int, int, int)
 BC_INLINE1(RIG_BACKEND_NUM, int, int)
 EOF
 
-grep -a define /usr/include/hamlib/riglist.h \
+grep -a define "$hamlib/riglist.h" \
   | sed 's/\/\*.*//g'                        \
   | grep '"'                                 \
   | awk '{print $2}'                         \
